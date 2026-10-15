@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Frontend (React + Vite)
+**/node_modules/
+**/dist/
+**/coverage/
+
+# Backend (Spring Boot + Gradle)
+**/.gradle/
+**/build/
+*.class
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
