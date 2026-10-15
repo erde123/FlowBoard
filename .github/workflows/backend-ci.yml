@@ -1,1 +1,28 @@
+on: 
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  pull request:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci.yml'
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./backend
+    steps:
+      - uses: action/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
 
+      - name: Run backend unit tests
+        working-directory: ./backend
+        run: ./mvnw test
