@@ -1,0 +1,37 @@
+name: Frontend CI
+
+on: 
+  push:
+    branches: [main]
+    paths: 
+      - 'Frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Frontend/**'
+      - '.github/workflows/frontend-ci.yml' 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults: 
+      run:
+        working-directory: ./Frontend
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '24'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        uses: npm ci
+
+      - name: Run CI tests
+        uses: npm test
