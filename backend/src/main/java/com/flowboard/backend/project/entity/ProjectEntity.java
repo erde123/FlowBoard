@@ -3,7 +3,6 @@ package com.flowboard.backend.project.entity;
 import java.time.Instant;
 import java.util.UUID;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +21,12 @@ import lombok.Setter;
 @Getter 
 @Setter 
 @NoArgsConstructor ( access = AccessLevel.PROTECTED)
-public class Project {
+public class ProjectEntity {
+
+    public ProjectEntity(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     @Id 
     @GeneratedValue (strategy = GenerationType.UUID)

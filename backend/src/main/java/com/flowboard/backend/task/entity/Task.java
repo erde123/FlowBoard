@@ -4,7 +4,7 @@ package com.flowboard.backend.task.entity;
 import com.flowboard.backend.task.enums.TaskStatus;
 import com.flowboard.backend.task.enums.TaskPriority;
 
-import com.flowboard.backend.project.entity.Project;
+import com.flowboard.backend.project.entity.ProjectEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,7 +40,7 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
-    private Project project;
+    private ProjectEntity project;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
