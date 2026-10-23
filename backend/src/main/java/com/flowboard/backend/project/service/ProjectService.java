@@ -3,7 +3,6 @@ package com.flowboard.backend.project.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flowboard.backend.project.repository.ProjectRepository;
@@ -15,8 +14,11 @@ import com.flowboard.backend.project.entity.ProjectEntity;
 @Service
 public class ProjectService {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
+
+    ProjectService(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
 
     @Transactional
     public ProjectEntity createProject(String name, String description) {
@@ -24,9 +26,9 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public ProjectEntity updateProfile(UUID id, ProjectEntity updatedData) {
+    public ProjectEntity updateProject(UUID id, ProjectEntity updatedData) {
         ProjectEntity project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Project not found"));
 
         project.setDescription(updatedData.getDescription());
         project.setName(updatedData.getName());
