@@ -14,26 +14,46 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tasks")
-@Getter 
-@Setter 
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Task {
+public class TaskEntity {
+
+    public TaskEntity(String title, String description, ProjectEntity project) {
+        this.title = title;
+        this.description = description;
+        this.project = project;
+    }
+
+    public TaskEntity(
+        String title,
+        String description,
+        TaskStatus status,
+        TaskPriority priority,
+        LocalDate dueDate) {
+    this.title = title;
+    this.description = description;
+    this.status = status;
+    this.priority = priority;
+    this.dueDate = dueDate;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String title;
 
+    @Column(length = 2000)
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private TaskStatus status = TaskStatus.TODO;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private TaskPriority priority = TaskPriority.MEDIUM;
 
     private LocalDate dueDate;
