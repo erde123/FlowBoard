@@ -24,10 +24,13 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("api/projects")
 public class ProjectController {
-    @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
 
     String errorText = "Project not found";
+
+    ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @PostMapping
     public ResponseEntity<ProjectEntity> createProject(@Valid @RequestBody ProjectRequest request) {
@@ -44,16 +47,16 @@ public class ProjectController {
         }
 
         ProjectEntity updatedData = new ProjectEntity(request.name(), request.description());
-        return ResponseEntity.ok(projectService.updateProfile(id, updatedData));
+        return ResponseEntity.ok(projectService.updateProject(id, updatedData));
     }
 
     @GetMapping
-    public ResponseEntity<List<ProjectEntity>> getAllUsers() {
+    public ResponseEntity<List<ProjectEntity>> getAllProjects() {
         return ResponseEntity.ok(projectService.findAll());
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Object> getUserById(@PathVariable("id") UUID id) {
+    public ResponseEntity<Object> getProjectById(@PathVariable("id") UUID id) {
         ProjectEntity project = projectService.findById(id);
         if (project == null) {
             return ResponseEntity.status(404).body(errorText);
@@ -63,7 +66,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("id") UUID id) {
+    public ResponseEntity<String> deleteProjectById(@PathVariable("id") UUID id) {
         ProjectEntity project = projectService.findById(id);
         if (project == null) {
             return ResponseEntity.status(404).body(errorText);
