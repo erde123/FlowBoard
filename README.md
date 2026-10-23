@@ -183,7 +183,7 @@ npm run lint
 npm run build
 ```
 
-Both CI workflows run on relevant pull requests to `main` and pushes to `main`.
+Both CI workflows run on pushes to any branch and pull requests targeting `main`, when files matching their path filters change. Backend changes trigger backend CI; frontend changes trigger frontend CI. A feature-branch push with an open pull request may trigger both a push run and a pull-request run.
 
 ## Branch workflow
 
